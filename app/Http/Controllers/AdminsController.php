@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRequest;
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -36,14 +37,9 @@ class AdminsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreAdminRequest $request)
     {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => $request->status,
-        ]);
+        User::create($request->validated());
 
         return redirect()->route('admins.index')->with('success', 'Admin created successfully.');
     }
@@ -51,25 +47,27 @@ class AdminsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $admin)
     {
-        //
+        return view('admins.show', compact('admin'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $admin)
     {
-        //
+        return view('admins.edit', compact('admin'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAdminRequest $request, User $admin)
     {
-        //
+        $admin->update($request->validated());
+
+        return redirect()->route('admins.index')->with('success', 'Admin updated successfully.');
     }
 
     /**

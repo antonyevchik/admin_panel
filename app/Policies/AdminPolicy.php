@@ -6,14 +6,14 @@ use App\Models\User;
 
 class AdminPolicy
 {
-    public function viewAny()
+    public function viewAny(): bool
     {
-
+        return auth()->check();
     }
 
-    public function view()
+    public function view(): bool
     {
-
+        return auth()->check();
     }
 
     public function create(User $user): bool

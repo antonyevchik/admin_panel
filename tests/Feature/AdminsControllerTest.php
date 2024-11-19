@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AdminsControllerTest extends TestCase
@@ -51,6 +52,19 @@ class AdminsControllerTest extends TestCase
         ]);
     }
 
+    public function test_user_can_view_admin_details()
+    {
+        $admin = User::factory()->create();
+
+        $response = $this->get(route('admins.show', $admin->id));
+
+        $response->assertStatus(200);
+
+        $response->assertViewIs('admins.show');
+
+        $response->assertViewHas('admin', $admin);
+    }
+
     public function test_admin_creation_requires_valid_data()
     {
         $response = $this->post(route('admins.store'), []);
@@ -72,5 +86,43 @@ class AdminsControllerTest extends TestCase
         $response->assertSee('Status');
         $response->assertSee('Avatar');
         $response->assertSee('Submit');
+    }
+
+    public function test_edit_admin_form_is_displayed()
+    {
+        $admin = User::factory()->create();
+
+        $response = $this->get(route('admins.edit', $admin->id));
+
+        $response->assertStatus(200)
+            ->assertViewIs('admins.edit')
+            ->assertViewHas('admin', $admin);
+    }
+
+    public function test_user_can_update_admin()
+    {
+        $admin = User::factory()->create();
+
+        $updateData = [
+            'name' => 'Updated Admin',
+            'email' => 'updatedadmin@example.com',
+            'password' => 'newpassword',
+            'status' => 'online',
+        ];
+
+        $response = $this->put(route('admins.update', $admin->id), $updateData);
+
+        $response->assertRedirect(route('admins.index'));
+
+        $response->assertSessionHas('success', 'Admin updated successfully.');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $admin->id,
+            'name' => $updateData['name'],
+            'email' => $updateData['email'],
+        ]);
+
+        $this->assertNotEquals($updateData['password'], $admin->fresh()->password);
+        $this->assertTrue(Hash::check($updateData['password'], $admin->fresh()->password));
     }
 }
