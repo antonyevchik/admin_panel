@@ -3,7 +3,8 @@
 return [
 
     'full_name' => 'Повне і\'мя',
-    'email' => 'Пошта',
+    'name' => 'Ім\'я',
+    'email' => 'E-mail',
     'password' => 'Пароль',
     'retype_password' => 'Підтвердження пароля',
     'remember_me' => 'Запам\'ятати мене',
@@ -19,5 +20,8 @@ return [
     'password_reset_message' => 'Відновлення пароля',
     'reset_password' => 'Відновлення пароля',
     'send_password_reset_link' => 'Відправити посилання для відновлення пароля',
-
+    'admins' => 'Адміністратори',
+    'status' => 'Статус',
+    'online' => 'Активний',
+    'offline' => 'Неактивний',
 ];
