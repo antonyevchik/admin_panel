@@ -2,7 +2,7 @@
 
 return [
 
-    'full_name' => 'Повне і\'мя',
+    'full_name' => 'Повне ім\'я',
     'name' => 'Ім\'я',
     'email' => 'E-mail',
     'password' => 'Пароль',
@@ -24,4 +24,6 @@ return [
     'status' => 'Статус',
     'online' => 'Активний',
     'offline' => 'Неактивний',
+    'actions' => 'Дії',
+    'create_new_admin' => 'Сторити нового адміна'
 ];

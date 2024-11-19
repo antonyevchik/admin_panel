@@ -313,7 +313,7 @@ return [
         // Sidebar items:
         [
             'text' => 'admins',
-            'url' => '/',
+            'url' => 'admins',
             'icon' => 'far fa-fw fa-file',
 //            'label' => 4,
             'label_color' => 'success',
