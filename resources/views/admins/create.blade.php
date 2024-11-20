@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="card p-2">
-        <div class="card-body m-5">
+    <div class="card">
+        <div class="card-body">
             <form action="{{ route('admins.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">

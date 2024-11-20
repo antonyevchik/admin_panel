@@ -125,4 +125,15 @@ class AdminsControllerTest extends TestCase
         $this->assertNotEquals($updateData['password'], $admin->fresh()->password);
         $this->assertTrue(Hash::check($updateData['password'], $admin->fresh()->password));
     }
+
+    public function test_authorized_user_can_delete_admin()
+    {
+        $admin = User::factory()->create();
+
+        $response = $this->delete(route('admins.destroy', $admin->id));
+
+        $response->assertRedirect(route('admins.index'));
+        $this->assertDatabaseMissing('users', ['id' => $admin->id]);
+        $response->assertSessionHas('success', 'Admin deleted successfully.');
+    }
 }

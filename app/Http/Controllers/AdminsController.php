@@ -19,9 +19,14 @@ class AdminsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $admins = User::all();
+        $admins = User::query()
+            ->when($request->filled('email'), fn($query) => $query->where('email', 'like', '%' . $request->email . '%'))
+            ->when($request->filled('name'), fn($query) => $query->where('name', 'like', '%' . $request->name . '%'))
+            ->when($request->filled('status'), fn($query) => $query->where('status', $request->status))
+            ->get();
+
 
         return view('admins.index', compact('admins'));
     }
@@ -73,8 +78,14 @@ class AdminsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $admin)
     {
-        //
+        $admin->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Admin deleted successfully!',
+            'redirect_url' => route('admins.index'),
+        ]);
     }
 }

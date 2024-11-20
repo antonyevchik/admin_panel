@@ -30,8 +30,8 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" class="form-control" required>
-                        <option value="1" {{ $admin->status ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ !$admin->status ? 'selected' : '' }}>Inactive</option>
+                        <option value="online" {{ $admin->status == 'online' ? 'selected' : '' }}>Active</option>
+                        <option value="offline" {{ $admin->status == 'offline' ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
             </div>
