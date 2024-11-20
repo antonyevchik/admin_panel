@@ -62,8 +62,8 @@
                         id="status"
                         class="form-control @error('status') is-invalid @enderror"
                         required>
-                        <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
+                        <option value="online" {{ old('status') == 'online' ? 'selected' : '' }}>Active</option>
+                        <option value="offline" {{ old('status') == 'offline' ? 'selected' : '' }}>Inactive</option>
                     </select>
                     @error('status')
                     <span class="invalid-feedback">{{ $message }}</span>
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>
