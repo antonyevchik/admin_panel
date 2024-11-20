@@ -26,6 +26,7 @@ class UpdateAdminRequest extends FormRequest
             'email' => 'required|email|unique:users,email,' . $this->route('admin')->id,
             'password' => 'required|string|min:4',
             'status' => 'required|string',
+            'avatar' => 'nullable|string|url',
         ];
     }
 }

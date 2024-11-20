@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UploadAvatar;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,5 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
     Route::resource('admins', AdminsController::class);
+    Route::post('/admins/upload-avatar', UploadAvatar::class)->name('admins.uploadAvatar');
 });

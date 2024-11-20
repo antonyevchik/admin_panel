@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('app')
 
 @section('title', 'Create New Admin')
 
@@ -70,25 +70,69 @@
                     @enderror
                 </div>
 
+{{--                <div class="form-group">--}}
+{{--                    <label for="avatar">Avatar</label>--}}
+{{--                    <div class="custom-file">--}}
+{{--                        <input--}}
+{{--                            type="file"--}}
+{{--                            name="avatar"--}}
+{{--                            id="avatar"--}}
+{{--                            class="custom-file-input @error('avatar') is-invalid @enderror">--}}
+{{--                        <label class="custom-file-label" for="avatar">Choose file</label>--}}
+{{--                    </div>--}}
+{{--                    @error('avatar')--}}
+{{--                    <span class="invalid-feedback">{{ $message }}</span>--}}
+{{--                    @enderror--}}
+{{--                </div>--}}
+
                 <div class="form-group">
                     <label for="avatar">Avatar</label>
-                    <div class="custom-file">
-                        <input
-                            type="file"
-                            name="avatar"
-                            id="avatar"
-                            class="custom-file-input @error('avatar') is-invalid @enderror">
-                        <label class="custom-file-label" for="avatar">Choose file</label>
+                    <div id="avatar-preview" style="margin-bottom: 10px;">
+                        <img src="{{ asset('default-avatar.png') }}" alt="Avatar Preview" width="150" id="avatar-image">
                     </div>
-                    @error('avatar')
-                    <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
+                    <div class="input-group">
+                        <input type="text" id="avatar-path" name="avatar" class="form-control" placeholder="Select avatar" readonly>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" id="upload-avatar-button">Upload</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
+            <div id="upload-modal" style="display: none;">
+                <form id="upload-avatar-form">
+                    <input type="file" id="avatar-file" name="avatar" accept="image/*" required>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        document.getElementById('upload-avatar-button').addEventListener('click', function () {
+            document.getElementById('upload-modal').style.display = 'block';
+        });
+
+        document.getElementById('upload-avatar-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            axios.post('{{ route('admins.uploadAvatar') }}', formData)
+                .then(response => {
+                    if (response.data.status === 'success') {
+                        document.getElementById('avatar-path').value = response.data.path;
+                        document.getElementById('avatar-image').src = response.data.path;
+                        document.getElementById('upload-modal').style.display = 'none';
+                    } else {
+                        alert(response.data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 @endsection
