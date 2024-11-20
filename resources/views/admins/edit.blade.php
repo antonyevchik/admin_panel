@@ -22,7 +22,7 @@
                         name="name"
                         id="name"
                         class="form-control @error('name') is-invalid @enderror"
-                        value="{{ old('name') }}"
+                        value="{{ old('name', $admin->name) }}"
                         placeholder="Enter name"
                         required>
                     @error('name')
@@ -37,7 +37,7 @@
                         name="email"
                         id="email"
                         class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}"
+                        value="{{ old('email', $admin->email) }}"
                         placeholder="Enter email"
                         required>
                     @error('email')
@@ -66,8 +66,8 @@
                         id="status"
                         class="form-control @error('status') is-invalid @enderror"
                         required>
-                        <option value="online" {{ old('status') == 'online' ? 'selected' : '' }}>Active</option>
-                        <option value="offline" {{ old('status') == 'offline' ? 'selected' : '' }}>Inactive</option>
+                        <option value="online" {{ old('status', $admin->status) == 'online' ? 'selected' : '' }}>Active</option>
+                        <option value="offline" {{ old('status', $admin->status) == 'offline' ? 'selected' : '' }}>Inactive</option>
                     </select>
                     @error('status')
                     <span class="invalid-feedback">{{ $message }}</span>
