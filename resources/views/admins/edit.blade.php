@@ -3,40 +3,40 @@
 @section('title', 'Edit Admin')
 
 @section('content_header')
-    <h1>Edit {{$admin->name}} profile</h1>
+    <h1>@lang('adminlte::adminlte.edit_profile', ['name' => $admin->name])</h1>
 @endsection
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Update {{$admin->name}} Details</h3>
+            <h3 class="card-title">@lang('adminlte::adminlte.update_data', ['name' => $admin->name])</h3>
         </div>
         <form action="{{ route('admins.update', $admin->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
-                    <label for="avatar">Avatar</label>
+                    <label for="avatar">@lang('adminlte::adminlte.avatar')</label>
                     <div id="avatar-preview"  class="mb-2">
                         <img src="{{ Storage::url($admin->avatar) ?? asset('uploads/avatars/default-avatar.png') }}" alt="Avatar Preview" width="150" id="avatar-image">
                     </div>
                     <input type="text" id="avatar-path" name="avatar" style="display: none;" readonly>
                     <div  class="position-relative d-inline-flex justify-content-start">
                         <input type="file" id="avatar-file" class="custom-file-input" accept="image/*" required>
-                        <label id="avatar-name" class="custom-file-label" for="customFile">Choose file</label>
+                        <label id="avatar-name" class="custom-file-label" for="customFile">@lang('adminlte::adminlte.choose_file')</label>
                     </div>
-                    <button id="upload-button" class="btn btn-primary mt-1">Upload</button>
+                    <button id="upload-button" class="btn btn-primary mt-1">@lang('adminlte::adminlte.attach')</button>
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">@lang('adminlte::adminlte.name')</label>
                     <input
                         type="text"
                         name="name"
                         id="name"
                         class="form-control @error('name') is-invalid @enderror"
                         value="{{ old('name', $admin->name) }}"
-                        placeholder="Enter name"
+                        placeholder="@lang('adminlte::adminlte.enter_name')"
                         required>
                     @error('name')
                     <span class="invalid-feedback">{{ $message }}</span>
@@ -44,14 +44,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">@lang('adminlte::adminlte.email')</label>
                     <input
                         type="email"
                         name="email"
                         id="email"
                         class="form-control @error('email') is-invalid @enderror"
                         value="{{ old('email', $admin->email) }}"
-                        placeholder="Enter email"
+                        placeholder="@lang('adminlte::adminlte.enter_email')"
                         required>
                     @error('email')
                     <span class="invalid-feedback">{{ $message }}</span>
@@ -59,13 +59,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">@lang('adminlte::adminlte.password')</label>
                     <input
                         type="password"
                         name="password"
                         id="password"
                         class="form-control @error('password') is-invalid @enderror"
-                        placeholder="Enter password"
+                        placeholder="@lang('adminlte::adminlte.enter_password')"
                         required>
                     @error('password')
                     <span class="invalid-feedback">{{ $message }}</span>
@@ -73,14 +73,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="status">Status</label>
+                    <label for="status">@lang('adminlte::adminlte.status')</label>
                     <select
                         name="status"
                         id="status"
                         class="form-control @error('status') is-invalid @enderror"
                         required>
-                        <option value="online" {{ old('status', $admin->status) == 'online' ? 'selected' : '' }}>Active</option>
-                        <option value="offline" {{ old('status', $admin->status) == 'offline' ? 'selected' : '' }}>Inactive</option>
+                        <option value="online" {{ old('status', $admin->status) == 'online' ? 'selected' : '' }}>@lang('adminlte::adminlte.online')</option>
+                        <option value="offline" {{ old('status', $admin->status) == 'offline' ? 'selected' : '' }}>@lang('adminlte::adminlte.offline')</option>
                     </select>
                     @error('status')
                     <span class="invalid-feedback">{{ $message }}</span>
@@ -88,8 +88,8 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="{{ route('admins.index') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">@lang('adminlte::adminlte.save')</button>
+                <a href="{{ route('admins.index') }}" class="btn btn-secondary">@lang('adminlte::adminlte.cancel')</a>
             </div>
         </form>
     </div>

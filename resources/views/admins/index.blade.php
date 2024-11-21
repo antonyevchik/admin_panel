@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1>@lang('adminlte::adminlte.admins')</h1>
         <a href="{{ route('admins.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i><span class="mx-2">Add</span>
+            <i class="fas fa-plus"></i><span class="mx-2">@lang('adminlte::adminlte.add')</span>
         </a>
     </div>
 @stop
@@ -19,41 +19,41 @@
                     <form action="{{ route('admins.index') }}" method="GET" class="form-inline">
 
                         <div class="form-group mx-sm-3 my-2">
-                            <label for="email" class="sr-only">Email</label>
+                            <label for="email" class="sr-only">@lang('adminlte::adminlte.email')</label>
                             <input
                                 type="text"
                                 name="email"
                                 id="email"
                                 class="form-control"
-                                placeholder="Search by Email"
+                                placeholder="@lang('adminlte::adminlte.email')"
                                 value="{{ request('email') }}"
                             >
                         </div>
 
                         <div class="form-group mx-sm-3 my-2">
-                            <label for="name" class="sr-only">Name</label>
+                            <label for="name" class="sr-only">@lang('adminlte::adminlte.name')</label>
                             <input
                                 type="text"
                                 name="name"
                                 id="name"
                                 class="form-control"
-                                placeholder="Search by Name"
+                                placeholder="@lang('adminlte::adminlte.name')"
                                 value="{{ request('name') }}"
                             >
                         </div>
 
                         <div class="form-group mx-sm-3 my-2">
-                            <label for="status" class="sr-only">Status</label>
+                            <label for="status" class="sr-only">@lang('adminlte::adminlte.status')</label>
                             <select name="status" id="status" class="form-control">
-                                <option value="">All Statuses</option>
-                                <option value="online" {{ request('status') == 'online' ? 'selected' : '' }}>Active</option>
-                                <option value="offline" {{ request('status') == 'offline' ? 'selected' : '' }}>Inactive</option>
+                                <option value="">@lang('adminlte::adminlte.all_statuses')</option>
+                                <option value="online" {{ request('status') == 'online' ? 'selected' : '' }}>@lang('adminlte::adminlte.online')</option>
+                                <option value="offline" {{ request('status') == 'offline' ? 'selected' : '' }}>@lang('adminlte::adminlte.offline')</option>
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary my-2 mx-2">Filter</button>
+                        <button type="submit" class="btn btn-primary my-2 mx-2">@lang('adminlte::adminlte.filter')</button>
 
-                        <a href="{{ route('admins.index') }}" class="btn btn-secondary my-2">Reset</a>
+                        <a href="{{ route('admins.index') }}" class="btn btn-secondary my-2">@lang('adminlte::adminlte.reset')</a>
                     </form>
                 </div>
             </div>
@@ -61,7 +61,7 @@
             <div class="box">
                 <div class="box-body table-responsive">
                     @if ($admins->isEmpty())
-                        <p>No admins found.</p>
+                        <p>@lang('adminlte::adminlte.no_admins_found')</p>
                     @else
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -90,7 +90,7 @@
                                         </td>
                                         <td>
                                              <span class="badge {{ $admin->status == 'online' ? 'badge-success' : 'badge-danger' }}">
-                                                {{ $admin->status == 'online' ? 'Active' : 'Inactive' }}
+                                                {{ $admin->status == 'online' ? __('adminlte::adminlte.online') : __('adminlte::adminlte.offline') }}
                                             </span>
                                         </td>
                                         <td>
@@ -116,19 +116,21 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
-<script>
-    function deleteAdmin(itemId) {
-        console.log(`admins/${itemId}`);
-        axios.delete(`admins/${itemId}`)
-            .then(response => {
-                if (response.data.redirect_url) {
-                    window.location.href = response.data.redirect_url;
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting item:', error);
-            });
-    }
-</script>
+@section('js')
+    <script>
+        function deleteAdmin(itemId) {
+            console.log(`admins/${itemId}`);
+            axios.delete(`admins/${itemId}`)
+                .then(response => {
+                    if (response.data.redirect_url) {
+                        window.location.href = response.data.redirect_url;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting item:', error);
+                });
+        }
+    </script>
+@endsection
