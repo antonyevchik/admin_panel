@@ -2,8 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -40,5 +43,16 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function withAvatar()
+    {
+        return $this->afterCreating(function (User $user) {
+            $url = "https://ui-avatars.com/api/?name=" . $user->name;
+            $contents = Http::get($url)->body();
+            $name = Str::random(10) . '.png';
+            Storage::disk('public')->put($name, $contents);
+            $user->update(['avatar' => $name]);
+        });
     }
 }

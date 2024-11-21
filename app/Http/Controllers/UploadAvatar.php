@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UploadAvatarRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UploadAvatar extends Controller
 {
@@ -16,12 +17,13 @@ class UploadAvatar extends Controller
             try {
                 $file = $request->file('avatar');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('uploads/avatars'), $filename);
+                Storage::disk('public')->put($filename, $file->getContent());
 
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Avatar uploaded successfully!',
-                    'path' => asset('uploads/avatars/' . $filename),
+                    'filename' => $filename,
+                    'path' => Storage::url($filename),
                 ]);
             } catch (\Exception $e) {
                 report($e);

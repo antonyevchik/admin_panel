@@ -77,11 +77,22 @@
                                     <tr>
                                         <td>{{ $admin->email }}</td>
                                         <td>
-                                            <a href="{{ route('admins.show', $admin->id) }}" class="nav-link">
-                                                {{ $admin->name }}
-                                            </a>
+                                            <div class="d-inline-flex">
+                                                @if($admin->avatar)
+                                                    <div id="avatar-preview" class="mb-2">
+                                                        <img src="{{ Storage::url($admin->avatar) }}" alt="Avatar Preview" width="30" height="30" id="avatar-image">
+                                                    </div>
+                                                @endif
+                                                <a href="{{ route('admins.show', $admin->id) }}" class="nav-link">
+                                                    {{ $admin->name }}
+                                                </a>
+                                            </div>
                                         </td>
-                                        <td>{{ $admin->status == 'online' ? __('adminlte::adminlte.online') : __('adminlte::adminlte.offline') }}</td>
+                                        <td>
+                                             <span class="badge {{ $admin->status == 'online' ? 'badge-success' : 'badge-danger' }}">
+                                                {{ $admin->status == 'online' ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
                                         <td>
                                             @can('update', $admin)
                                                 <a href="{{ route('admins.edit', $admin->id) }}" class="btn btn-info btn-sm">

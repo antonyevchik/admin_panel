@@ -26,7 +26,7 @@ class StoreAdminRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:4',
             'status' => 'required|string',
-            'avatar' => 'nullable|string|url',
+            'avatar' => 'nullable|string',
         ];
     }
 }
