@@ -17,12 +17,14 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="avatar">@lang('adminlte::adminlte.avatar')</label>
-                    <div id="avatar-preview"  class="mb-2">
-                        <img src="{{ Storage::url($admin->avatar) ?? asset('uploads/avatars/default-avatar.png') }}" alt="Avatar Preview" width="150" id="avatar-image">
-                    </div>
+{{--                    @if($admin->avatar)--}}
+                        <div id="avatar-preview"  class="mb-2">
+                            <img src="{{ $admin->avatar ? Storage::url($admin->avatar) : asset('uploads/avatars/default-avatar.png') }}" alt="Avatar Preview" width="150" id="avatar-image">
+                        </div>
+{{--                    @endif--}}
                     <input type="text" id="avatar-path" name="avatar" style="display: none;" readonly>
                     <div  class="position-relative d-inline-flex justify-content-start">
-                        <input type="file" id="avatar-file" class="custom-file-input" accept="image/*" required>
+                        <input type="file" id="avatar-file" class="custom-file-input" accept="image/*">
                         <label id="avatar-name" class="custom-file-label" for="customFile">@lang('adminlte::adminlte.choose_file')</label>
                     </div>
                     <button id="upload-button" class="btn btn-primary mt-1">@lang('adminlte::adminlte.attach')</button>

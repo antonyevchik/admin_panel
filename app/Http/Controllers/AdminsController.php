@@ -81,6 +81,9 @@ class AdminsController extends Controller
     {
         $adminData = AdminDTO::fromRequest($request->validated());
 
+//        if (!$adminData->avatar && $admin->avatar) $adminData->avatar = $admin->avatar;
+        $adminData->avatar = $adminData->avatar ?? $admin->avatar;
+
         $admin->update([
             'name' => $adminData->name,
             'email' => $adminData->email,
