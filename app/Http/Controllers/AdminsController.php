@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObjects\AdminDTO;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\User;
@@ -44,7 +45,15 @@ class AdminsController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        User::create($request->validated());
+        $adminData = AdminDTO::fromRequest($request->validated());
+
+        User::create([
+            'name' => $adminData->name,
+            'email' => $adminData->email,
+            'password' => $adminData->password,
+            'status' => $adminData->status,
+            'avatar' => $adminData->avatar,
+        ]);
 
         return redirect()->route('admins.index')->with('success', 'Admin created successfully.');
     }
@@ -70,7 +79,15 @@ class AdminsController extends Controller
      */
     public function update(UpdateAdminRequest $request, User $admin)
     {
-        $admin->update($request->validated());
+        $adminData = AdminDTO::fromRequest($request->validated());
+
+        $admin->update([
+            'name' => $adminData->name,
+            'email' => $adminData->email,
+            'password' => $adminData->password,
+            'status' => $adminData->status,
+            'avatar' => $adminData->avatar,
+        ]);
 
         return redirect()->route('admins.index')->with('success', 'Admin updated successfully.');
     }
