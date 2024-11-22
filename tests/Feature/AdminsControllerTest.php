@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -35,19 +34,21 @@ class AdminsControllerTest extends TestCase
     public function test_admin_can_be_created()
     {
         $data = [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
+            'name'     => 'John Doe',
+            'email'    => 'john.doe@example.com',
             'password' => 'password123',
-            'status' => 'offline',
+            'status'   => 'offline',
+            'avatar'   => '4fIN2WWSaL.png'
         ];
 
         $response = $this->post(route('admins.store'), $data);
 
         $response->assertRedirect(route('admins.index'));
         $this->assertDatabaseHas('users', [
-            'name' => 'John Doe',
-            'email' => 'john.doe@example.com',
+            'name'   => 'John Doe',
+            'email'  => 'john.doe@example.com',
             'status' => 'offline',
+            'avatar' => '4fIN2WWSaL.png'
         ]);
     }
 
@@ -99,10 +100,10 @@ class AdminsControllerTest extends TestCase
         $admin = User::factory()->create();
 
         $updateData = [
-            'name' => 'Updated Admin',
-            'email' => 'updatedadmin@example.com',
+            'name'     => 'Updated Admin',
+            'email'    => 'updatedadmin@example.com',
             'password' => 'newpassword',
-            'status' => 'online',
+            'status'   => 'online',
         ];
 
         $response = $this->put(route('admins.update', $admin->id), $updateData);
@@ -112,8 +113,8 @@ class AdminsControllerTest extends TestCase
         $response->assertSessionHas('success', 'Admin updated successfully.');
 
         $this->assertDatabaseHas('users', [
-            'id' => $admin->id,
-            'name' => $updateData['name'],
+            'id'    => $admin->id,
+            'name'  => $updateData['name'],
             'email' => $updateData['email'],
         ]);
 

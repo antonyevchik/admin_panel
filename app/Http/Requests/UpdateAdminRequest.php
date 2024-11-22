@@ -22,11 +22,11 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:4',
-            'email' => 'required|email|unique:users,email,' . $this->route('admin')->id,
+            'name'     => 'required|string|min:4',
+            'email'    => 'required|email|unique:users,email,' . $this->route('admin')->id,
             'password' => 'required|string|min:4',
-            'status' => 'required|string',
-            'avatar' => 'nullable|string',
+            'status'   => 'required|string',
+            'avatar'   => 'nullable|string',
         ];
     }
 }

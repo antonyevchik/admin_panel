@@ -10,7 +10,8 @@ class AdminDTO
         public string $password,
         public string $status,
         public ?string $avatar = null
-    ) {}
+    ) {
+    }
 
     public static function fromRequest(array $validatedData): self
     {

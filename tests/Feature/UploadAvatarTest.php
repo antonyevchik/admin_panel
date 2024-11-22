@@ -32,7 +32,7 @@ class UploadAvatarTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Avatar uploaded successfully!',
         ]);
 

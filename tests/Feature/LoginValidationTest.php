@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class LoginValidationTest extends TestCase
@@ -16,10 +15,10 @@ class LoginValidationTest extends TestCase
         parent::setUp();
 
         User::create([
-            'name' => 'Joe',
-            'email' => 'joe@example.com',
+            'name'     => 'Joe',
+            'email'    => 'joe@example.com',
             'password' => 'password123',
-            'status' => 'online'
+            'status'   => 'online'
         ]);
     }
 
@@ -39,21 +38,21 @@ class LoginValidationTest extends TestCase
         $response->assertJsonValidationErrors(['email', 'password']);
 
         $response = $this->postJson(route('login'), [
-            'email' => 'not-an-email',
+            'email'    => 'not-an-email',
             'password' => 'password123',
         ]);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['email']);
 
         $response = $this->postJson(route('login'), [
-            'email' => 'joe@example.com',
+            'email'    => 'joe@example.com',
             'password' => '123',
         ]);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['password']);
 
         $response = $this->postJson(route('login'), [
-            'email' => 'joe@example.com',
+            'email'    => 'joe@example.com',
             'password' => 'password123',
         ]);
         $response->assertStatus(200);

@@ -27,11 +27,11 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name'              => fake()->name(),
+            'email'             => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password'          => static::$password ??= Hash::make('password'),
+            'remember_token'    => Str::random(10),
         ];
     }
 
@@ -48,9 +48,9 @@ class UserFactory extends Factory
     public function withAvatar()
     {
         return $this->afterCreating(function (User $user) {
-            $url = "https://ui-avatars.com/api/?name=" . $user->name;
+            $url      = "https://ui-avatars.com/api/?name=" . $user->name;
             $contents = Http::get($url)->body();
-            $name = Str::random(10) . '.png';
+            $name     = Str::random(10) . '.png';
             Storage::disk('public')->put($name, $contents);
             $user->update(['avatar' => $name]);
         });

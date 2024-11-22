@@ -22,11 +22,11 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required|min:4',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:4',
-            'status' => 'required|string',
-            'avatar' => 'required|string',
+            'status'   => 'required|string',
+            'avatar'   => 'required|string',
         ];
     }
 }

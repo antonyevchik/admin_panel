@@ -7,7 +7,6 @@ use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
 {
@@ -23,9 +22,9 @@ class AdminsController extends Controller
     public function index(Request $request)
     {
         $admins = User::query()
-            ->when($request->filled('email'), fn($query) => $query->where('email', 'like', '%' . $request->email . '%'))
-            ->when($request->filled('name'), fn($query) => $query->where('name', 'like', '%' . $request->name . '%'))
-            ->when($request->filled('status'), fn($query) => $query->where('status', $request->status))
+            ->when($request->filled('email'), fn ($query) => $query->where('email', 'like', '%' . $request->email . '%'))
+            ->when($request->filled('name'), fn ($query) => $query->where('name', 'like', '%' . $request->name . '%'))
+            ->when($request->filled('status'), fn ($query) => $query->where('status', $request->status))
             ->get();
 
 
@@ -48,11 +47,11 @@ class AdminsController extends Controller
         $adminData = AdminDTO::fromRequest($request->validated());
 
         User::create([
-            'name' => $adminData->name,
-            'email' => $adminData->email,
+            'name'     => $adminData->name,
+            'email'    => $adminData->email,
             'password' => $adminData->password,
-            'status' => $adminData->status,
-            'avatar' => $adminData->avatar,
+            'status'   => $adminData->status,
+            'avatar'   => $adminData->avatar,
         ]);
 
         return redirect()->route('admins.index')->with('success', 'Admin created successfully.');
@@ -81,15 +80,15 @@ class AdminsController extends Controller
     {
         $adminData = AdminDTO::fromRequest($request->validated());
 
-//        if (!$adminData->avatar && $admin->avatar) $adminData->avatar = $admin->avatar;
+        //        if (!$adminData->avatar && $admin->avatar) $adminData->avatar = $admin->avatar;
         $adminData->avatar = $adminData->avatar ?? $admin->avatar;
 
         $admin->update([
-            'name' => $adminData->name,
-            'email' => $adminData->email,
+            'name'     => $adminData->name,
+            'email'    => $adminData->email,
             'password' => $adminData->password,
-            'status' => $adminData->status,
-            'avatar' => $adminData->avatar,
+            'status'   => $adminData->status,
+            'avatar'   => $adminData->avatar,
         ]);
 
         return redirect()->route('admins.index')->with('success', 'Admin updated successfully.');
@@ -103,8 +102,8 @@ class AdminsController extends Controller
         $admin->delete();
 
         return response()->json([
-            'success' => true,
-            'message' => 'Admin deleted successfully!',
+            'success'      => true,
+            'message'      => 'Admin deleted successfully!',
             'redirect_url' => route('admins.index'),
         ]);
     }
